@@ -6,12 +6,6 @@ export default defineConfig(({ command }) => ({
 
   root: "src",
 
-  server: {
-    fs: {
-      allow: [".."]
-    }
-  },
-
   build: {
     outDir: "../dist",
     emptyOutDir: true,
