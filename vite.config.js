@@ -1,39 +1,30 @@
 import { resolve } from "path";
 import { defineConfig } from "vite";
 
-export default defineConfig({
-  root: "src/",
+export default defineConfig(({ command }) => ({
+  base: command === "build" ? "/wdd330-sleepoutside/" : "/",
 
-  //  this is to serve static assets from src/json during development
+  root: "src",
+
   server: {
     fs: {
-      // Allow serving files from project root
-      allow: ['..']
+      allow: [".."]
     }
   },
 
   build: {
     outDir: "../dist",
-    copyPublicDir: true,
+    emptyOutDir: true,
     rollupOptions: {
       input: {
         main: resolve(__dirname, "src/index.html"),
         cart: resolve(__dirname, "src/cart/index.html"),
         checkout: resolve(__dirname, "src/checkout/index.html"),
-        product1: resolve(
-          __dirname,
-          "src/product_pages/cedar-ridge-rimrock-2.html",
-        ),
+        product1: resolve(__dirname, "src/product_pages/cedar-ridge-rimrock-2.html"),
         product2: resolve(__dirname, "src/product_pages/marmot-ajax-3.html"),
-        product3: resolve(
-          __dirname,
-          "src/product_pages/northface-alpine-3.html",
-        ),
-        product4: resolve(
-          __dirname,
-          "src/product_pages/northface-talus-4.html",
-        ),
-      },
-    },
-  },
-});
+        product3: resolve(__dirname, "src/product_pages/northface-alpine-3.html"),
+        product4: resolve(__dirname, "src/product_pages/northface-talus-4.html")
+      }
+    }
+  }
+}));
