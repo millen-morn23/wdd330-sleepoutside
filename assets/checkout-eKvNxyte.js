@@ -1,4 +1,4 @@
-import{l,u as m,g as i}from"./utils-B_pOmXog.js";async function d(){await l(),m(),f();const e=document.querySelector(".checkout-form");e&&e.addEventListener("submit",y)}function f(){const e=i("so-cart")||[],n=document.querySelector(".checkout-summary"),t=document.querySelector(".checkout-total");if(!n)return;const s=e.map(o=>`
+import{l,u as m,g as i}from"./utils-MGANcz1u.js";async function d(){await l(),m(),f();const e=document.querySelector(".checkout-form");e&&e.addEventListener("submit",y)}function f(){const e=i("so-cart")||[],n=document.querySelector(".checkout-summary"),t=document.querySelector(".checkout-total");if(!n)return;const s=e.map(o=>`
     <li>
       <span>${o.Name} (x${o.quantity||1})</span>
       <span>$${(o.FinalPrice*(o.quantity||1)).toFixed(2)}</span>

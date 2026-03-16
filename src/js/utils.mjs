@@ -1,19 +1,15 @@
-// wrapper for querySelector...returns matching element
 export function qs(selector, parent = document) {
   return parent.querySelector(selector);
 }
 
-// retrieve data from localstorage
 export function getLocalStorage(key) {
   return JSON.parse(localStorage.getItem(key));
 }
 
-// save data to local storage
 export function setLocalStorage(key, data) {
   localStorage.setItem(key, JSON.stringify(data));
 }
 
-// set a listener for both touchend and click
 export function setClick(selector, callback) {
   qs(selector).addEventListener("touchend", (event) => {
     event.preventDefault();
@@ -24,24 +20,20 @@ export function setClick(selector, callback) {
 
 export async function loadTemplate(path) {
   const response = await fetch(path);
-  if (!response.ok) {
-    throw new Error(`Template load failed: ${path}`);
-  }
-  return await response.text();
+  const html = await response.text();
+  return html;
 }
 
-// ⭐ FINAL FIX FOR GITHUB PAGES
 export async function loadHeaderFooter() {
   const base = import.meta.env.BASE_URL;
 
-  const header = await loadTemplate(base + "partials/header.html");
-  const footer = await loadTemplate(base + "partials/footer.html");
+  const header = await loadTemplate(`${base}partials/header.html`);
+  const footer = await loadTemplate(`${base}partials/footer.html`);
 
   document.querySelector("header").innerHTML = header;
   document.querySelector("footer").innerHTML = footer;
 }
 
-// UPDATED CART COUNT FUNCTION
 export function updateCartCount() {
   const cartItems = getLocalStorage("so-cart") || [];
   const countElement = document.querySelector(".cart-count");
@@ -66,5 +58,6 @@ export async function sendOrder(order) {
     body: JSON.stringify(order)
   });
 
-  return await response.json();
+  const data = await response.json();
+  return data;
 }
