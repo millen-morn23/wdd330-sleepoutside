@@ -24,13 +24,18 @@ export function setClick(selector, callback) {
 
 export async function loadTemplate(path) {
   const response = await fetch(path);
-  const html = await response.text();
-  return html;
+  if (!response.ok) {
+    throw new Error(`Template load failed: ${path}`);
+  }
+  return await response.text();
 }
 
+// ⭐ FINAL FIX FOR GITHUB PAGES
 export async function loadHeaderFooter() {
-  const header = await loadTemplate("/partials/header.html");
-  const footer = await loadTemplate("/partials/footer.html");
+  const base = import.meta.env.BASE_URL;
+
+  const header = await loadTemplate(base + "partials/header.html");
+  const footer = await loadTemplate(base + "partials/footer.html");
 
   document.querySelector("header").innerHTML = header;
   document.querySelector("footer").innerHTML = footer;
@@ -41,7 +46,6 @@ export function updateCartCount() {
   const cartItems = getLocalStorage("so-cart") || [];
   const countElement = document.querySelector(".cart-count");
 
-  // calculate total quantity of items in cart
   const totalItems = cartItems.reduce((sum, item) => {
     return sum + (item.quantity || 1);
   }, 0);
@@ -62,6 +66,5 @@ export async function sendOrder(order) {
     body: JSON.stringify(order)
   });
 
-  const data = await response.json();
-  return data;
+  return await response.json();
 }
